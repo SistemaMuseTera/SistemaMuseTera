@@ -318,13 +318,15 @@ interface RelatorioFormProps {
   tipo?: TipoRelatorio;
 }
 
+type FormData = Record<string, Record<string, any>>
+
 export function RelatorioForm({ onSubmit, initialData, tipo = 'sessao' }: RelatorioFormProps) {
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null)
-  const [formData, setFormData] = useState(initialData || {})
+  const [formData, setFormData] = useState<FormData>(initialData || {})
   const [tipoRelatorio, setTipoRelatorio] = useState(tipo)
 
   const handleInputChange = (secao: string, campo: string, valor: any) => {
-    setFormData(prev => ({
+    setFormData((prev: FormData) => ({
       ...prev,
       [secao]: {
         ...prev[secao],
