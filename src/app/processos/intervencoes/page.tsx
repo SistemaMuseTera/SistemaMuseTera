@@ -253,7 +253,7 @@ export default function IntervencoesPage() {
 
     // Informações do paciente
     doc.setFontSize(12)
-    doc.text(`Nome do Paciente: ${selectedPatient?.nome}`, 20, 40)
+    doc.text(`Nome do Paciente: ${selectedPatient?.name}`, 20, 40)
     doc.text(`Data: ${data}`, 20, 50)
 
     // Intervenções selecionadas
