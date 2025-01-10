@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { Card } from '@/components/ui/Card'
-import { FiMail, FiLock, FiAlertCircle } from 'react-icons/fi'
+import { FiMail, FiLock, FiAlertCircle, FiMusic } from 'react-icons/fi'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -46,27 +46,32 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-4">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">MuseTera</h1>
-          <p className="text-gray-600">Sistema de Gestão para Musicoterapeutas</p>
+    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-white to-purple-100 flex flex-col items-center justify-center p-4">
+      <div className="w-full max-w-md space-y-8">
+        <div className="text-center">
+          <div className="flex justify-center mb-4">
+            <div className="bg-indigo-600 p-3 rounded-full">
+              <FiMusic className="h-8 w-8 text-white" />
+            </div>
+          </div>
+          <h1 className="text-4xl font-bold text-gray-900 tracking-tight mb-2">MuseTera</h1>
+          <p className="text-lg text-gray-600">Sistema de Gestão para Musicoterapeutas</p>
         </div>
 
-        <Card className="p-8">
-          <div className="text-center mb-6">
-            <h2 className="text-2xl font-semibold text-gray-900">
+        <Card className="p-8 bg-white/80 backdrop-blur-sm shadow-xl rounded-2xl">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold text-gray-900">
               Bem-vindo(a) de volta!
             </h2>
-            <p className="text-gray-600 mt-1">
+            <p className="text-gray-600 mt-2">
               Faça login para acessar sua conta
             </p>
           </div>
 
           <form className="space-y-6" onSubmit={handleSubmit}>
-            <div className="space-y-4">
-              <div className="relative">
-                <FiMail className="absolute left-3 top-3 text-gray-400" />
+            <div className="space-y-5">
+              <div className="relative group">
+                <FiMail className="absolute left-3 top-3 text-gray-400 group-focus-within:text-indigo-500 transition-colors" />
                 <input
                   id="email"
                   name="email"
@@ -74,12 +79,12 @@ export default function LoginPage() {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  className="appearance-none block w-full px-10 py-2 border border-gray-300 rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="block w-full px-10 py-3 bg-gray-50 border border-gray-200 rounded-xl placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all duration-200 ease-in-out"
                   placeholder="Email"
                 />
               </div>
-              <div className="relative">
-                <FiLock className="absolute left-3 top-3 text-gray-400" />
+              <div className="relative group">
+                <FiLock className="absolute left-3 top-3 text-gray-400 group-focus-within:text-indigo-500 transition-colors" />
                 <input
                   id="password"
                   name="password"
@@ -87,15 +92,15 @@ export default function LoginPage() {
                   required
                   value={formData.password}
                   onChange={handleChange}
-                  className="appearance-none block w-full px-10 py-2 border border-gray-300 rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="block w-full px-10 py-3 bg-gray-50 border border-gray-200 rounded-xl placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all duration-200 ease-in-out"
                   placeholder="Senha"
                 />
               </div>
             </div>
 
             {error && (
-              <div className="flex items-center text-sm text-red-600 bg-red-50 p-3 rounded-md">
-                <FiAlertCircle className="mr-2" />
+              <div className="flex items-center text-sm text-red-600 bg-red-50 p-4 rounded-xl border border-red-100">
+                <FiAlertCircle className="mr-2 flex-shrink-0" />
                 {error}
               </div>
             )}
@@ -103,16 +108,16 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? 'Entrando...' : 'Entrar'}
             </button>
           </form>
         </Card>
 
-        <div className="text-center mt-8 text-sm text-gray-600">
-          {new Date().getFullYear()} MuseTera. Todos os direitos reservados.
-        </div>
+        <p className="text-center text-sm text-gray-600 mt-8">
+          2025 MuseTera. Todos os direitos reservados.
+        </p>
       </div>
     </div>
   )
