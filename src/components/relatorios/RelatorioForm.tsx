@@ -315,10 +315,10 @@ type TipoRelatorio = 'sessao' | 'reavaliacao' | 'alta' | 'avaliacao_inicial' | '
 interface RelatorioFormProps {
   onSubmit: (data: any) => void;
   initialData?: any;
-  tipo: TipoRelatorio;
+  tipo?: TipoRelatorio;
 }
 
-export function RelatorioForm({ onSubmit, initialData, tipo }: RelatorioFormProps) {
+export function RelatorioForm({ onSubmit, initialData, tipo = 'sessao' }: RelatorioFormProps) {
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null)
   const [formData, setFormData] = useState(initialData || {})
   const [tipoRelatorio, setTipoRelatorio] = useState(tipo)
