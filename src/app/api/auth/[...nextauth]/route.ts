@@ -3,7 +3,7 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import { prisma } from '@/lib/prisma'
 import bcrypt from 'bcryptjs'
 
-export const authOptions: AuthOptions = {
+const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
       name: 'credentials',
@@ -23,18 +23,13 @@ export const authOptions: AuthOptions = {
             }
           })
 
-          console.log('Usuário encontrado:', user)
-
           if (!user || !user.password) {
-            console.log('Usuário não encontrado:', credentials.email)
             return null
           }
 
           const isValid = await bcrypt.compare(credentials.password, user.password)
-          console.log('Senha válida:', isValid)
 
           if (!isValid) {
-            console.log('Senha inválida para o usuário:', credentials.email)
             return null
           }
 
@@ -44,7 +39,6 @@ export const authOptions: AuthOptions = {
             name: user.name
           }
         } catch (error) {
-          console.error('Erro na autenticação:', error)
           return null
         }
       }
@@ -54,7 +48,7 @@ export const authOptions: AuthOptions = {
     signIn: '/login',
     error: '/login'
   },
-  debug: true,
+  debug: false,
   session: {
     strategy: 'jwt',
     maxAge: 30 * 24 * 60 * 60, // 30 days
