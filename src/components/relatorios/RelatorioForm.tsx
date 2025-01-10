@@ -14,6 +14,8 @@ const TIPOS_RELATORIO = [
   { id: 'evolucao_mensal', label: 'Relatório de Evolução Mensal' },
   { id: 'evolucao_semestral', label: 'Relatório de Evolução Semestral' },
   { id: 'avaliacao', label: 'Relatório de Avaliação' },
+  { id: 'avaliacao_inicial', label: 'Relatório de Avaliação Inicial' },
+  { id: 'reavaliacao', label: 'Relatório de Reavaliação' },
   { id: 'alta', label: 'Relatório de Alta' },
   { id: 'familia', label: 'Relatório para Família' },
   { id: 'equipe', label: 'Relatório para Equipe' }
@@ -310,7 +312,7 @@ const CONCLUSOES_ESPECIFICAS = {
   }
 };
 
-type TipoRelatorio = 'sessao' | 'evolucao_mensal' | 'evolucao_semestral' | 'avaliacao' | 'alta' | 'familia' | 'equipe';
+type TipoRelatorio = 'sessao' | 'evolucao_mensal' | 'evolucao_semestral' | 'avaliacao' | 'avaliacao_inicial' | 'reavaliacao' | 'alta' | 'familia' | 'equipe';
 
 interface RelatorioFormProps {
   onSubmit: (data: any) => void;
