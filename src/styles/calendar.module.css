@@ -1,0 +1,24 @@
+.calendar {
+  min-height: 600px;
+}
+
+.event {
+  background-color: #4f46e5;
+  border: none;
+}
+
+.eventIndigo {
+  background-color: #4f46e5;
+}
+
+.eventGreen {
+  background-color: #16a34a;
+}
+
+.eventRed {
+  background-color: #dc2626;
+}
+
+.eventGray {
+  background-color: #4b5563;
+} 

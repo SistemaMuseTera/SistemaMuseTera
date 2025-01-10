@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Estilos do Calendário */
+:root {
+  --calendar-height: calc(100vh - 250px);
+}
+
+.rbc-calendar {
+  height: var(--calendar-height);
+  font-family: inherit;
+}
+
+.rbc-event {
+  background-color: #4f46e5;
+  border: none;
+}
+
+.rbc-event.agendado {
+  background-color: #4f46e5;
+}
+
+.rbc-event.concluido {
+  background-color: #16a34a;
+}
+
+.rbc-event.cancelado {
+  background-color: #dc2626;
+}
+
+.rbc-event.default {
+  background-color: #4b5563;
+}
+
+.rbc-today {
+  background-color: #f3f4f6;
+}
+
+.rbc-selected {
+  background-color: #e5e7eb;
+}
+
+.rbc-toolbar button {
+  color: #374151;
+}
+
+.rbc-toolbar button:hover {
+  background-color: #f3f4f6;
+}
+
+.rbc-toolbar button:active,
+.rbc-toolbar button.rbc-active {
+  background-color: #e5e7eb;
+  border-color: #d1d5db;
+} 

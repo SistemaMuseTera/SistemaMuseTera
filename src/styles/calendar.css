@@ -1,0 +1,26 @@
+@import 'react-big-calendar/lib/css/react-big-calendar.css';
+
+.rbc-calendar {
+  min-height: 600px;
+}
+
+.rbc-event {
+  background-color: #4f46e5;
+  border: none;
+}
+
+.rbc-event.bg-indigo-600 {
+  background-color: #4f46e5;
+}
+
+.rbc-event.bg-green-600 {
+  background-color: #16a34a;
+}
+
+.rbc-event.bg-red-600 {
+  background-color: #dc2626;
+}
+
+.rbc-event.bg-gray-600 {
+  background-color: #4b5563;
+} 

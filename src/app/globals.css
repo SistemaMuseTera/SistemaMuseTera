@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Estilos para select e optgroup */
+select {
+  @apply appearance-none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+}
+
+select:disabled {
+  @apply bg-gray-100 cursor-not-allowed;
+}
+
+optgroup {
+  @apply font-semibold bg-gray-50;
+}
+
+option {
+  @apply font-normal bg-white;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .print-content, .print-content * {
+    visibility: visible;
+  }
+  .print-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+  @page {
+    margin: 2cm;
+  }
+} 
+
+/* Estilos do calendário */
+.rbc-calendar {
+  min-height: 600px;
+}
+
+.rbc-event {
+  background-color: #4f46e5 !important;
+  border: none !important;
+}
+
+.rbc-event.agendado {
+  background-color: #4f46e5 !important;
+}
+
+.rbc-event.concluido {
+  background-color: #16a34a !important;
+}
+
+.rbc-event.cancelado {
+  background-color: #dc2626 !important;
+}
+
+.rbc-event.default {
+  background-color: #4b5563 !important;
+} 
+
+/* Animação de shake */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+.animate-shake {
+  animation: shake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
