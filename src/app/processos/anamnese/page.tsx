@@ -84,16 +84,15 @@ function AnamneseForm({ patient }: { patient: Patient }) {
     try {
       const anamneseData = {
         patientId: patient.id,
-        respostas: formData,
-        observacoes: formData.observacoes as string
+        respostas: Object.entries(formData).reduce((acc, [key, value]) => ({
+          ...acc,
+          [key]: Array.isArray(value) ? value : [value].filter(Boolean)
+        }), {}),
+        observacoes: (formData.observacoes as string) || ''
       }
 
-      addAnamnese(anamneseData)
-
-      // Mostra mensagem de sucesso
+      await addAnamnese(anamneseData)
       alert('Anamnese salva com sucesso!')
-      
-      // Redireciona para a lista de pacientes ou outra página relevante
       router.push('/pacientes')
     } catch (error) {
       console.error('Erro ao salvar anamnese:', error)
@@ -176,12 +175,13 @@ function AnamneseForm({ patient }: { patient: Patient }) {
                         <label key={option} className="flex items-center gap-1.5">
                           <input
                             type="checkbox"
-                            checked={Array.isArray(formData[question.id]) && formData[question.id].includes(option)}
+                            checked={Array.isArray(formData[question.id]) && (formData[question.id] as string[]).includes(option)}
                             onChange={(e) => {
-                              const currentValue = Array.isArray(formData[question.id]) ? formData[question.id] : []
+                              const currentValue = formData[question.id] || []
+                              const currentArray = Array.isArray(currentValue) ? currentValue : [currentValue].filter(Boolean)
                               const newValue = e.target.checked
-                                ? [...currentValue, option]
-                                : currentValue.filter(v => v !== option)
+                                ? [...currentArray, option]
+                                : currentArray.filter(v => v !== option)
                               handleInputChange(question.id, newValue)
                             }}
                             className="rounded border-gray-300 h-3.5 w-3.5"
