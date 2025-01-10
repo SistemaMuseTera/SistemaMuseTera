@@ -163,7 +163,7 @@ export const OBJETIVOS_PADRAO: ObjetivoPadrao[] = [
     id: '19',
     texto: 'Desenvolver percepção vibrotátil da música',
     diagnosticos: ['Deficiencia_Auditiva'],
-    categoria: 'percepcao'
+    categoria: 'desenvolvimento'
   },
   {
     id: '20',
