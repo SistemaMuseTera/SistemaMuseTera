@@ -18,6 +18,16 @@ interface PlanoPDFProps {
   onClose: () => void
 }
 
+// Declaração de tipos para window.jspdf
+declare global {
+  interface Window {
+    jspdf: {
+      jsPDF: any;
+      autoTable: any;
+    };
+  }
+}
+
 export function PlanoPDF({ plano, paciente, objetivosSelecionados, onClose }: PlanoPDFProps) {
   const [isReady, setIsReady] = useState(false)
   const [scriptsLoaded, setScriptsLoaded] = useState({
@@ -56,9 +66,7 @@ export function PlanoPDF({ plano, paciente, objetivosSelecionados, onClose }: Pl
 
       const generatePDFContent = () => {
         try {
-          // @ts-ignore
           const jsPDF = window.jspdf.jsPDF
-          // @ts-ignore
           const autoTable = window.jspdf.autoTable
           
           const doc = new jsPDF()
@@ -120,7 +128,6 @@ export function PlanoPDF({ plano, paciente, objetivosSelecionados, onClose }: Pl
             semana.objetivos.join(', ')
           ])
 
-          // @ts-ignore
           doc.autoTable({
             startY: yPos + 20,
             head: [['Semana', 'Atividades', 'Objetivos']],
