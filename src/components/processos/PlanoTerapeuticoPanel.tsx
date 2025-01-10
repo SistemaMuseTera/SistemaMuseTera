@@ -15,7 +15,11 @@ import {
   PlanoTerapeutico 
 } from '@/types/plano'
 
-export function PlanoTerapeuticoPanel() {
+interface PlanoTerapeuticoPanelProps {
+  patientId?: string;
+}
+
+export function PlanoTerapeuticoPanel({ patientId }: PlanoTerapeuticoPanelProps) {
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null)
   const [diagnostico, setDiagnostico] = useState<Diagnostico>('TEA')
   
@@ -30,7 +34,7 @@ export function PlanoTerapeuticoPanel() {
 
   const [plano, setPlano] = useState<PlanoTerapeutico>({
     id: '',
-    patientId: selectedPatient?.id || '',
+    patientId: patientId || '',
     identificacao: {
       nome: selectedPatient?.name || '',
       idade: selectedPatient ? calculateAge(new Date(selectedPatient.dateOfBirth)) : 0,
@@ -69,6 +73,29 @@ export function PlanoTerapeuticoPanel() {
 
   const [jspdfLoaded, setJspdfLoaded] = useState(false)
   const [autotableLoaded, setAutotableLoaded] = useState(false)
+
+  // Carregar paciente quando patientId for fornecido
+  useEffect(() => {
+    if (patientId) {
+      fetch(`/api/patients/${patientId}`)
+        .then(res => res.json())
+        .then(data => {
+          setSelectedPatient(data)
+          setPlano(prev => ({
+            ...prev,
+            patientId: data.id,
+            identificacao: {
+              nome: data.name,
+              idade: calculateAge(new Date(data.dateOfBirth)),
+              diagnostico: diagnostico,
+              dataInicio: new Date(),
+              dataReavaliacao: new Date()
+            }
+          }))
+        })
+        .catch(console.error)
+    }
+  }, [patientId])
 
   const handleDiagnosticoChange = (novoDiagnostico: Diagnostico) => {
     setDiagnostico(novoDiagnostico)
