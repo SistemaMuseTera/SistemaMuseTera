@@ -310,10 +310,18 @@ const CONCLUSOES_ESPECIFICAS = {
   }
 };
 
-export function RelatorioForm({ onSubmit, initialData }: { onSubmit: (data: any) => void, initialData?: any }) {
+type TipoRelatorio = 'sessao' | 'reavaliacao' | 'alta' | 'avaliacao_inicial' | 'evolucao_mensal' | 'evolucao_semestral' | 'familia' | 'equipe';
+
+interface RelatorioFormProps {
+  onSubmit: (data: any) => void;
+  initialData?: any;
+  tipo: TipoRelatorio;
+}
+
+export function RelatorioForm({ onSubmit, initialData, tipo }: RelatorioFormProps) {
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null)
   const [formData, setFormData] = useState(initialData || {})
-  const [tipoRelatorio, setTipoRelatorio] = useState('')
+  const [tipoRelatorio, setTipoRelatorio] = useState(tipo)
 
   const handleInputChange = (secao: string, campo: string, valor: any) => {
     setFormData(prev => ({
