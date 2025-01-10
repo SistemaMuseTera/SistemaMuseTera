@@ -1,4 +1,6 @@
-export const ESCALA_DEMUCA = [
+import { EscalaDemuca } from '@/types/escala'
+
+export const ESCALA_DEMUCA: EscalaDemuca = [
   {
     categoria: 'Comportamentos restritivos',
     parametros: [

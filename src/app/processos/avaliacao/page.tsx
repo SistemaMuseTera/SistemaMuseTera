@@ -13,7 +13,7 @@ import { ESCALA_DEMUCA } from '@/data/escalaDemuca'
 const calcularPontuacao = (categoria: typeof ESCALA_DEMUCA[0], avaliacoes: Record<string, string>) => {
   let total = 0
   
-  categoria.parametros.forEach(parametro => {
+  categoria.parametros.forEach((parametro: string | { nome: string; multiplicador?: number }) => {
     const nomeParametro = typeof parametro === 'string' ? parametro : parametro.nome
     const resposta = avaliacoes[nomeParametro]
     if (!resposta) return
@@ -96,7 +96,7 @@ export default function AvaliacaoPage() {
 
       // Parâmetros
       doc.setFontSize(12)
-      categoria.parametros.forEach(parametro => {
+      categoria.parametros.forEach((parametro: string | { nome: string; multiplicador?: number }) => {
         const nome = typeof parametro === 'string' ? parametro : parametro.nome
         const multiplicador = typeof parametro === 'string' ? '' : ` (x${parametro.multiplicador})`
         const valor = avaliacoes[nome] || 'Não avaliado'
