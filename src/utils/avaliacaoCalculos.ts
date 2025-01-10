@@ -24,7 +24,8 @@ export function calcularPorcentagens(avaliacoes: Record<string, string>) {
 
   ESCALA_DEMUCA.forEach(categoria => {
     categoria.parametros.forEach(parametro => {
-      const valor = avaliacoes[parametro]
+      const paramNome = typeof parametro === 'string' ? parametro : parametro.nome
+      const valor = avaliacoes[paramNome]
       if (valor) {
         totalRespostas++
         if (categoria.categoria === 'Comportamentos restritivos') {
@@ -52,7 +53,8 @@ export function calcularPorcentagens(avaliacoes: Record<string, string>) {
     let respostasCategoria = 0
 
     categoria.parametros.forEach(parametro => {
-      const valor = avaliacoes[parametro]
+      const paramNome = typeof parametro === 'string' ? parametro : parametro.nome
+      const valor = avaliacoes[paramNome]
       if (valor) {
         respostasCategoria++
         maxPontosCategoria += 2
