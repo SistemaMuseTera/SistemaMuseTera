@@ -310,7 +310,7 @@ const CONCLUSOES_ESPECIFICAS = {
   }
 };
 
-type TipoRelatorio = 'sessao' | 'reavaliacao' | 'alta' | 'avaliacao_inicial' | 'evolucao_mensal' | 'evolucao_semestral' | 'familia' | 'equipe';
+type TipoRelatorio = 'sessao' | 'evolucao_mensal' | 'evolucao_semestral' | 'avaliacao' | 'alta' | 'familia' | 'equipe';
 
 interface RelatorioFormProps {
   onSubmit: (data: any) => void;
@@ -471,7 +471,7 @@ export function RelatorioForm({ onSubmit, initialData, tipo = 'sessao' }: Relato
             <select
               className="w-full p-2 border rounded-lg"
               value={tipoRelatorio}
-              onChange={(e) => setTipoRelatorio(e.target.value)}
+              onChange={(e) => setTipoRelatorio(e.target.value as TipoRelatorio)}
               required
             >
               <option value="">Selecione o tipo de relatório...</option>
