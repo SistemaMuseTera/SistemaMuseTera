@@ -237,19 +237,19 @@ export const OBJETIVOS_PADRAO: ObjetivoPadrao[] = [
     id: '30',
     texto: 'Desenvolver reconhecimento de padrões sonoros',
     diagnosticos: ['DPAC', 'Deficiencia_Auditiva', 'TEA'],
-    categoria: 'percepcao'
+    categoria: 'desenvolvimento'
   },
   {
     id: '31',
     texto: 'Estimular integração sensorial através da música',
     diagnosticos: ['Deficiencia_Visual', 'TEA', 'DPAC'],
-    categoria: 'percepcao'
+    categoria: 'desenvolvimento'
   },
   {
     id: '32',
     texto: 'Desenvolver orientação espacial através de pistas sonoras',
     diagnosticos: ['Deficiencia_Visual', 'Deficiencia_Auditiva'],
-    categoria: 'percepcao'
+    categoria: 'desenvolvimento'
   },
   {
     id: '33',
