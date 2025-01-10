@@ -191,13 +191,13 @@ export const OBJETIVOS_PADRAO: ObjetivoPadrao[] = [
     id: '23',
     texto: 'Desenvolver discriminação de timbres e intensidades sonoras',
     diagnosticos: ['DPAC', 'Deficiencia_Auditiva', 'TEA'],
-    categoria: 'percepcao'
+    categoria: 'desenvolvimento'
   },
   {
     id: '24',
     texto: 'Aprimorar localização espacial através de estímulos sonoros',
     diagnosticos: ['Deficiencia_Visual', 'DPAC'],
-    categoria: 'percepcao'
+    categoria: 'desenvolvimento'
   },
 
   // Objetivos para Condições Neurológicas
