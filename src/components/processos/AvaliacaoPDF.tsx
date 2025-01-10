@@ -2,6 +2,7 @@
 
 import { Patient } from '@/types'
 import jsPDF from 'jspdf'
+import { DocumentArrowDownIcon } from '@heroicons/react/24/outline'
 
 interface AvaliacaoPDFProps {
   patient: Patient
