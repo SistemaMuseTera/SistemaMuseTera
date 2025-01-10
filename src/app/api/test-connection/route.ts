@@ -5,9 +5,7 @@ import { supabase } from '@/lib/supabase'
 export async function GET() {
   try {
     // Teste conexão Prisma
-    const prismaTest = await prisma.user.findMany({
-      take: 1
-    })
+    const prismaTest = await prisma.$queryRaw`SELECT 1 as result`
 
     // Teste conexão Supabase
     const { data: supabaseTest, error } = await supabase
@@ -21,16 +19,21 @@ export async function GET() {
 
     return NextResponse.json({
       status: 'success',
-      prismaConnection: 'ok',
-      prismaData: prismaTest,
-      supabaseConnection: 'ok',
-      supabaseData: supabaseTest
+      message: 'Conexão estabelecida com sucesso',
+      prisma: prismaTest,
+      supabase: supabaseTest
     })
-  } catch (error: any) {
+  } catch (error) {
     console.error('Erro ao testar conexão:', error)
-    return NextResponse.json({
-      status: 'error',
-      message: error.message
-    }, { status: 500 })
+    return NextResponse.json(
+      {
+        status: 'error',
+        message: 'Erro ao acessar o banco',
+        error: error instanceof Error ? error.message : String(error)
+      },
+      { status: 500 }
+    )
+  } finally {
+    await prisma.$disconnect()
   }
 }
