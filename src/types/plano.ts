@@ -169,7 +169,7 @@ export const OBJETIVOS_PADRAO: ObjetivoPadrao[] = [
     id: '20',
     texto: 'Estimular orientação espacial através do som',
     diagnosticos: ['Deficiencia_Visual'],
-    categoria: 'percepcao'
+    categoria: 'desenvolvimento'
   },
 
   // Objetivos para TEA e Comunicação
