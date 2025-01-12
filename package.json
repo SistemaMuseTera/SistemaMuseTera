@@ -50,6 +50,6 @@
     "@types/moment": "^2.11.29",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
-    "typescript": "^5"
+    "typescript": "^5.3.3"
   }
 }
