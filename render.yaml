@@ -8,7 +8,9 @@ services:
       - key: NODE_VERSION
         value: 18
       - key: DATABASE_URL
-        sync: false
+        value: postgresql://postgres.uwzswsqvmcinkczzlutv:[YOUR-PASSWORD]@aws-0-sa-east-1.pooler.supabase.com:6543/postgres?pgbouncer=true
+      - key: DIRECT_URL
+        value: postgresql://postgres.uwzswsqvmcinkczzlutv:[YOUR-PASSWORD]@aws-0-sa-east-1.pooler.supabase.com:5432/postgres
       - key: NEXTAUTH_SECRET
         sync: false
       - key: NEXTAUTH_URL
