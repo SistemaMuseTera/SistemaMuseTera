@@ -13,8 +13,7 @@ const authOptions: AuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          console.error('Credenciais faltando')
-          return null
+          throw new Error('Credenciais faltando')
         }
 
         try {
@@ -31,15 +30,13 @@ const authOptions: AuthOptions = {
           })
 
           if (!user || !user.password) {
-            console.error('Usuário não encontrado')
-            return null
+            throw new Error('Usuário não encontrado')
           }
 
           const isValid = await bcrypt.compare(credentials.password, user.password)
 
           if (!isValid) {
-            console.error('Senha inválida')
-            return null
+            throw new Error('Senha inválida')
           }
 
           return {
@@ -49,7 +46,7 @@ const authOptions: AuthOptions = {
           }
         } catch (error) {
           console.error('Erro na autenticação:', error)
-          return null
+          throw error
         }
       }
     })
@@ -83,7 +80,8 @@ const authOptions: AuthOptions = {
         httpOnly: true,
         sameSite: 'lax',
         path: '/',
-        secure: process.env.NODE_ENV === 'production'
+        secure: process.env.NODE_ENV === 'production',
+        domain: process.env.NODE_ENV === 'production' ? '.onrender.com' : undefined
       }
     }
   },
@@ -92,7 +90,8 @@ const authOptions: AuthOptions = {
     maxAge: 30 * 24 * 60 * 60 // 30 dias
   },
   secret: process.env.NEXTAUTH_SECRET,
-  debug: true
+  debug: process.env.NODE_ENV === 'development',
+  trustHost: true
 }
 
 const handler = NextAuth(authOptions)

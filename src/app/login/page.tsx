@@ -32,25 +32,34 @@ export default function LoginPage() {
       const result = await signIn('credentials', {
         email: formData.email,
         password: formData.password,
-        redirect: false,
-        callbackUrl: '/dashboard'
+        redirect: false
       })
 
       if (result?.error) {
         console.error('Erro no login:', result.error)
-        setError('Email ou senha inválidos')
+        switch (result.error) {
+          case 'Credenciais faltando':
+            setError('Por favor, preencha todos os campos')
+            break
+          case 'Usuário não encontrado':
+            setError('Email não encontrado')
+            break
+          case 'Senha inválida':
+            setError('Senha incorreta')
+            break
+          default:
+            setError('Erro ao fazer login. Tente novamente.')
+        }
         return
       }
 
-      if (result?.url) {
-        router.push(result.url)
-      } else {
+      if (result?.ok) {
         router.push('/dashboard')
+        router.refresh()
       }
-      router.refresh()
     } catch (error) {
       console.error('Erro no login:', error)
-      setError('Ocorreu um erro ao fazer login')
+      setError('Ocorreu um erro ao fazer login. Tente novamente mais tarde.')
     } finally {
       setIsLoading(false)
     }
