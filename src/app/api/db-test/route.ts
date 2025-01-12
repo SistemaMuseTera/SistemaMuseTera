@@ -4,7 +4,7 @@ import { prisma } from '@/lib/prisma'
 export async function GET() {
   try {
     // Tenta fazer uma consulta simples
-    const result = await prisma.$queryRaw`SELECT current_timestamp`
+    const result = await prisma.$queryRaw<Array<{ current_timestamp: Date }>>`SELECT current_timestamp`
     
     return NextResponse.json({
       status: 'ok',
