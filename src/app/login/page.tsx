@@ -28,14 +28,20 @@ export default function LoginPage() {
         email: formData.email,
         password: formData.password,
         redirect: false,
+        callbackUrl: '/dashboard'
       })
 
       if (result?.error) {
+        console.error('Erro no login:', result.error)
         setError('Email ou senha inválidos')
         return
       }
 
-      router.push('/dashboard')
+      if (result?.url) {
+        router.push(result.url)
+      } else {
+        router.push('/dashboard')
+      }
       router.refresh()
     } catch (error) {
       console.error('Erro no login:', error)
@@ -47,78 +53,76 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-white to-purple-100 flex flex-col items-center justify-center p-4">
-      <div className="w-full max-w-md space-y-8">
-        <div className="text-center">
-          <div className="flex justify-center mb-4">
-            <div className="bg-indigo-600 p-3 rounded-full">
-              <FiMusic className="h-8 w-8 text-white" />
-            </div>
+      <Card className="w-full max-w-md p-8 space-y-6">
+        <div className="text-center space-y-2">
+          <div className="flex justify-center">
+            <FiMusic className="h-12 w-12 text-indigo-600" />
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 tracking-tight mb-2">MuseTera</h1>
-          <p className="text-lg text-gray-600">Sistema de Gestão para Musicoterapeutas</p>
+          <h1 className="text-2xl font-bold text-gray-900">MuseTera</h1>
+          <p className="text-gray-500">Sistema de Gestão para Musicoterapeutas</p>
         </div>
 
-        <Card className="p-8 bg-white/80 backdrop-blur-sm shadow-xl rounded-2xl">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-gray-900">
-              Bem-vindo(a) de volta!
-            </h2>
-            <p className="text-gray-600 mt-2">
-              Faça login para acessar sua conta
-            </p>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              Email
+            </label>
+            <div className="mt-1 relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <FiMail className="h-5 w-5 text-gray-400" />
+              </div>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                value={formData.email}
+                onChange={handleChange}
+                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                placeholder="seu@email.com"
+              />
+            </div>
           </div>
 
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            <div className="space-y-5">
-              <div className="relative group">
-                <FiMail className="absolute left-3 top-3 text-gray-400 group-focus-within:text-indigo-500 transition-colors" />
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="block w-full px-10 py-3 bg-gray-50 border border-gray-200 rounded-xl placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all duration-200 ease-in-out"
-                  placeholder="Email"
-                />
+          <div>
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              Senha
+            </label>
+            <div className="mt-1 relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <FiLock className="h-5 w-5 text-gray-400" />
               </div>
-              <div className="relative group">
-                <FiLock className="absolute left-3 top-3 text-gray-400 group-focus-within:text-indigo-500 transition-colors" />
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  required
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="block w-full px-10 py-3 bg-gray-50 border border-gray-200 rounded-xl placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all duration-200 ease-in-out"
-                  placeholder="Senha"
-                />
-              </div>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                required
+                value={formData.password}
+                onChange={handleChange}
+                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                placeholder="••••••••"
+              />
             </div>
+          </div>
 
-            {error && (
-              <div className="flex items-center text-sm text-red-600 bg-red-50 p-4 rounded-xl border border-red-100">
-                <FiAlertCircle className="mr-2 flex-shrink-0" />
-                {error}
-              </div>
-            )}
+          {error && (
+            <div className="flex items-center space-x-2 text-red-600">
+              <FiAlertCircle className="h-5 w-5" />
+              <span className="text-sm">{error}</span>
+            </div>
+          )}
 
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isLoading ? 'Entrando...' : 'Entrar'}
-            </button>
-          </form>
-        </Card>
-
-        <p className="text-center text-sm text-gray-600 mt-8">
-          2025 MuseTera. Todos os direitos reservados.
-        </p>
-      </div>
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+          >
+            {isLoading ? 'Entrando...' : 'Entrar'}
+          </button>
+        </form>
+      </Card>
     </div>
   )
 }

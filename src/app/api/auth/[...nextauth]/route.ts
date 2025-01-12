@@ -13,24 +13,33 @@ const authOptions: AuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          throw new Error('Email e senha são obrigatórios')
+          console.error('Credenciais faltando')
+          return null
         }
 
         try {
           const user = await prisma.user.findUnique({
             where: {
               email: credentials.email
+            },
+            select: {
+              id: true,
+              email: true,
+              name: true,
+              password: true
             }
           })
 
           if (!user || !user.password) {
-            throw new Error('Email ou senha inválidos')
+            console.error('Usuário não encontrado')
+            return null
           }
 
           const isValid = await bcrypt.compare(credentials.password, user.password)
 
           if (!isValid) {
-            throw new Error('Email ou senha inválidos')
+            console.error('Senha inválida')
+            return null
           }
 
           return {
@@ -40,7 +49,7 @@ const authOptions: AuthOptions = {
           }
         } catch (error) {
           console.error('Erro na autenticação:', error)
-          throw error
+          return null
         }
       }
     })
@@ -50,14 +59,11 @@ const authOptions: AuthOptions = {
     error: '/login'
   },
   callbacks: {
-    async jwt({ token, user, account }) {
-      if (account && user) {
-        return {
-          ...token,
-          id: user.id,
-          email: user.email,
-          name: user.name
-        }
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id
+        token.email = user.email
+        token.name = user.name
       }
       return token
     },
