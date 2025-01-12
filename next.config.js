@@ -4,13 +4,19 @@ const nextConfig = {
   swcMinify: true,
   transpilePackages: ['react-big-calendar', 'moment'],
   experimental: {
-    esmExternals: 'loose',
     optimizeCss: true,
-  },
-  images: {
-    unoptimized: true,
+    esmExternals: true,
   },
   output: 'standalone',
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
+    unoptimized: true,
+  },
   typescript: {
     ignoreBuildErrors: true
   }
