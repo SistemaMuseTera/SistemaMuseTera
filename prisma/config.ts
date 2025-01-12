@@ -13,40 +13,52 @@ const prismaClientSingleton = () => {
       },
     },
     errorFormat: 'pretty'
+  }).$extends({
+    query: {
+      async $allOperations({ operation, args, query }) {
+        const maxRetries = 3
+        let retryCount = 0
+        let lastError: any = null
+        
+        while (retryCount < maxRetries) {
+          try {
+            // Adiciona um pequeno delay antes de cada tentativa (exceto a primeira)
+            if (retryCount > 0) {
+              await new Promise(resolve => setTimeout(resolve, Math.pow(2, retryCount) * 1000))
+            }
+            
+            return await query(args)
+          } catch (error: any) {
+            lastError = error
+            const isConnectionError = 
+              error?.message?.includes('Can\'t reach database server') ||
+              error?.message?.includes('Connection refused') ||
+              error?.message?.includes('Connection terminated') ||
+              error?.code === 'P1001' || // Erro de conexão do Prisma
+              error?.code === 'P1002'    // Erro de timeout do Prisma
+            
+            if (isConnectionError) {
+              console.error(`Tentativa ${retryCount + 1} de ${maxRetries} falhou:`, error)
+              retryCount++
+              continue
+            }
+            
+            throw error
+          }
+        }
+        
+        // Se chegou aqui, todas as tentativas falharam
+        console.error('Todas as tentativas de conexão falharam')
+        throw lastError
+      }
+    }
   })
 }
 
 const prismaBase = globalForPrisma.prisma ?? prismaClientSingleton()
 
-const prismaWithRetry = prismaBase.$extends({
-  query: {
-    async $allOperations({ operation, args, query }) {
-      const maxRetries = 3
-      let retryCount = 0
-      
-      while (retryCount < maxRetries) {
-        try {
-          return await query(args)
-        } catch (error: any) {
-          if (error?.message?.includes('Cannot reach database server')) {
-            console.error(`Database connection attempt ${retryCount + 1} failed:`, error)
-            retryCount++
-            if (retryCount === maxRetries) {
-              throw new Error('Não foi possível conectar ao banco de dados após várias tentativas. Por favor, tente novamente em alguns instantes.')
-            }
-            // Espera um tempo antes de tentar novamente (exponential backoff)
-            await new Promise(resolve => setTimeout(resolve, Math.pow(2, retryCount) * 1000))
-            continue
-          }
-          throw error
-        }
-      }
-    }
-  }
-})
-
 if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prismaBase
 }
 
-export const prisma = prismaWithRetry
+export const prisma = prismaBase
