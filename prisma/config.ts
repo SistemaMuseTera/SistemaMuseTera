@@ -4,15 +4,21 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
 }
 
-export const prisma = globalForPrisma.prisma ?? new PrismaClient({
-  log: ['query', 'error', 'warn'],
-  datasources: {
-    db: {
-      url: process.env.DATABASE_URL
+const prismaClientSingleton = () => {
+  return new PrismaClient({
+    log: ['query', 'error', 'warn'],
+    datasources: {
+      db: {
+        url: process.env.DATABASE_URL
+      },
     },
-  },
-  errorFormat: 'pretty'
-}).$extends({
+    errorFormat: 'pretty'
+  })
+}
+
+const prismaBase = globalForPrisma.prisma ?? prismaClientSingleton()
+
+const prismaWithRetry = prismaBase.$extends({
   query: {
     async $allOperations({ operation, args, query }) {
       const maxRetries = 3
@@ -39,4 +45,8 @@ export const prisma = globalForPrisma.prisma ?? new PrismaClient({
   }
 })
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
+if (process.env.NODE_ENV !== 'production') {
+  globalForPrisma.prisma = prismaBase
+}
+
+export const prisma = prismaWithRetry
