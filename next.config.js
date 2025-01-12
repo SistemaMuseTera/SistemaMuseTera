@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
-  transpilePackages: ['react-big-calendar', 'moment'],
   experimental: {
     optimizeCss: true,
     esmExternals: true,
@@ -19,7 +16,11 @@ const nextConfig = {
   },
   typescript: {
     ignoreBuildErrors: true
-  }
+  },
+  swcMinify: true,
+  poweredByHeader: false,
+  compress: true,
+  generateEtags: true,
 }
 
 module.exports = nextConfig
