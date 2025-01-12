@@ -13,10 +13,10 @@ services:
         sync: false
       - key: NEXTAUTH_URL
         value: https://musetera.onrender.com
-      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
-        sync: false
       - key: NEXT_PUBLIC_SUPABASE_URL
-        sync: false
+        value: https://uwzswsqvmcinkczzlutv.supabase.co
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV3enN3c3F2bWNpbmtjenpsdXR2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY1MTQ4ODksImV4cCI6MjA1MjA5MDg4OX0.iCtR9Aact4v54BwNSioKTBgey9iAYSafisKkd2RjS5I
       - key: SUPABASE_SERVICE_ROLE_KEY
         sync: false
     autoDeploy: true
