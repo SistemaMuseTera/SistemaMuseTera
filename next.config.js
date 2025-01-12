@@ -4,8 +4,13 @@ const nextConfig = {
   experimental: {
     esmExternals: 'loose'
   },
-  output: 'standalone',
-  trailingSlash: true
+  webpack: (config) => {
+    config.resolve.fallback = { fs: false, path: false };
+    return config;
+  },
+  images: {
+    unoptimized: true
+  }
 }
 
 module.exports = nextConfig
