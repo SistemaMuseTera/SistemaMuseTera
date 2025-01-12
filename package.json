@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "build": "prisma generate && prisma migrate deploy && next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -23,6 +23,7 @@
     "@types/react-big-calendar": "^1.16.0",
     "bcryptjs": "^2.4.3",
     "clsx": "^2.1.1",
+    "critters": "^0.0.20",
     "css-loader": "^7.1.2",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.2",
