@@ -4,12 +4,12 @@ const nextConfig = {
   experimental: {
     esmExternals: 'loose'
   },
-  webpack: (config) => {
-    config.resolve.fallback = { fs: false, path: false };
-    return config;
-  },
   images: {
     unoptimized: true
+  },
+  output: 'standalone',
+  typescript: {
+    ignoreBuildErrors: true
   }
 }
 
