@@ -8,11 +8,9 @@ services:
       - key: NODE_VERSION
         value: 18
       - key: DATABASE_URL
-        value: postgresql://postgres.uwzswsqvmcinkczzlutv:v049OiSrghUo67Yg@aws-0-sa-east-1.pooler.supabase.com:5432/postgres?pgbouncer=true&connection_limit=1
-      - key: DIRECT_URL
-        value: postgresql://postgres.uwzswsqvmcinkczzlutv:v049OiSrghUo67Yg@aws-0-sa-east-1.pooler.supabase.com:5432/postgres
+        value: postgresql://postgres.uwzswsqvmcinkczzlutv:v049OiSrghUo67Yg@aws-0-sa-east-1.pooler.supabase.com:5432/postgres?pgbouncer=true&pool_timeout=10&application_name=musetera
       - key: NEXTAUTH_SECRET
-        sync: false
+        value: museteraapp-nextauth-secret-123!
       - key: NEXTAUTH_URL
         value: https://musetera.onrender.com
       - key: NEXT_PUBLIC_SUPABASE_URL
