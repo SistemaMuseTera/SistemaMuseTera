@@ -32,7 +32,8 @@ export default function LoginPage() {
       const result = await signIn('credentials', {
         email: formData.email,
         password: formData.password,
-        redirect: false
+        redirect: false,
+        callbackUrl: '/dashboard'
       })
 
       if (result?.error) {
@@ -48,18 +49,18 @@ export default function LoginPage() {
             setError('Senha incorreta')
             break
           default:
-            setError('Erro ao fazer login. Tente novamente.')
+            setError('Erro ao fazer login. Por favor, tente novamente em alguns instantes.')
         }
         return
       }
 
       if (result?.ok) {
-        router.push('/dashboard')
+        await router.push('/dashboard')
         router.refresh()
       }
     } catch (error) {
       console.error('Erro no login:', error)
-      setError('Ocorreu um erro ao fazer login. Tente novamente mais tarde.')
+      setError('Ocorreu um erro ao fazer login. Por favor, tente novamente em alguns instantes.')
     } finally {
       setIsLoading(false)
     }

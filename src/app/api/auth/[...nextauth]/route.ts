@@ -2,6 +2,21 @@ import NextAuth, { AuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { prisma } from '@/lib/prisma'
 import bcrypt from 'bcryptjs'
+import { NextResponse } from 'next/server'
+
+export async function OPTIONS(request: Request) {
+  const allowedOrigin = process.env.NEXTAUTH_URL || 'https://musetera.onrender.com'
+  
+  return new NextResponse(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': allowedOrigin,
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      'Access-Control-Allow-Credentials': 'true',
+    },
+  })
+}
 
 const authOptions: AuthOptions = {
   providers: [
@@ -90,8 +105,16 @@ const authOptions: AuthOptions = {
     maxAge: 30 * 24 * 60 * 60 // 30 dias
   },
   secret: process.env.NEXTAUTH_SECRET,
-  debug: process.env.NODE_ENV === 'development'
+  debug: process.env.NODE_ENV === 'development',
+  errors: {
+    CredentialsSignin: {
+      UserNotFound: 'Usuário não encontrado',
+      InvalidCredentials: 'Senha inválida',
+      InvalidEmail: 'E-mail inválido',
+    },
+  },
 }
 
 const handler = NextAuth(authOptions)
+
 export { handler as GET, handler as POST }
