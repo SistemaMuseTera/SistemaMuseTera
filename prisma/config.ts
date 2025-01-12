@@ -9,7 +9,7 @@ const prismaClientSingleton = () => {
     log: ['query', 'error', 'warn'],
     datasources: {
       db: {
-        url: process.env.DATABASE_URL
+        url: process.env.DIRECT_URL || process.env.DATABASE_URL
       },
     },
     errorFormat: 'pretty'
