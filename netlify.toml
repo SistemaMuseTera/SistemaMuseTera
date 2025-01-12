@@ -7,8 +7,8 @@
   NODE_VERSION = "18"
   NPM_FLAGS = "--no-audit --no-optional"
   NEXT_TELEMETRY_DISABLED = "1"
-  DATABASE_URL = "postgres://postgres.uwzswsqvmcinkczzlutv:QwiGPYeapGoXuDESYrby22D+7251FxOkEIVW+efAxdHJE8BQwzNRvHHu3qMrN49R93y9b2Nvx503bY6Hw5j+lw==@aws-0-sa-east-1.pooler.supabase.com:5432/postgres"
-  DIRECT_URL = "postgres://postgres.uwzswsqvmcinkczzlutv:QwiGPYeapGoXuDESYrby22D+7251FxOkEIVW+efAxdHJE8BQwzNRvHHu3qMrN49R93y9b2Nvx503bY6Hw5j+lw==@db.uwzswsqvmcinkczzlutv.supabase.co:5432/postgres"
+  DIRECT_URL = "postgresql://postgres.uwzswsqvmcinkczzlutv:QwiGPYeapGoXuDESYrby22D%2B7251FxOkEIVW%2BefAxdHJE8BQwzNRvHHu3qMrN49R93y9b2Nvx503bY6Hw5j%2Blw%3D%3D@db.uwzswsqvmcinkczzlutv.supabase.co:5432/postgres"
+  DATABASE_URL = ${DIRECT_URL}
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
