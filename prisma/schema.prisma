@@ -5,6 +5,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -18,7 +19,7 @@ model User {
   updatedAt            DateTime  @updatedAt
   accounts             Account[]
   sessions             Session[]
-  patients            Patient[]
+  patients             Patient[]
 }
 
 model Account {
