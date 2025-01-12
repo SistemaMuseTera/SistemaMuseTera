@@ -2,7 +2,6 @@
 const nextConfig = {
   experimental: {
     optimizeCss: true,
-    esmExternals: true,
   },
   output: 'standalone',
   images: {
@@ -21,7 +20,11 @@ const nextConfig = {
   poweredByHeader: false,
   compress: true,
   generateEtags: true,
-  reactStrictMode: false
+  reactStrictMode: false,
+  env: {
+    DATABASE_URL: process.env.DATABASE_URL,
+    DIRECT_URL: process.env.DIRECT_URL,
+  }
 }
 
 module.exports = nextConfig
