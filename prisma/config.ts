@@ -13,21 +13,46 @@ const prismaClientSingleton = () => {
   return prisma.$extends({
     query: {
       async $allOperations({ operation, args, query }) {
-        try {
-          return await query(args)
-        } catch (error: any) {
-          console.error('Erro na operação do Prisma:', {
-            operation,
-            error: error.message,
-            code: error.code
-          })
-          
-          if (error?.message?.includes('Can\'t reach database server')) {
-            throw new Error('Não foi possível conectar ao banco de dados. Por favor, tente novamente em alguns instantes.')
+        const maxRetries = 3
+        let retryCount = 0
+        let lastError: any = null
+        
+        while (retryCount < maxRetries) {
+          try {
+            if (retryCount > 0) {
+              console.log(`Tentativa ${retryCount + 1} de ${maxRetries} para operação ${operation}`)
+              await new Promise(resolve => setTimeout(resolve, Math.pow(2, retryCount) * 1000))
+            }
+            
+            return await query(args)
+          } catch (error: any) {
+            lastError = error
+            console.error('Erro na operação do Prisma:', {
+              operation,
+              attempt: retryCount + 1,
+              error: error.message,
+              code: error.code
+            })
+
+            const isConnectionError = 
+              error?.message?.includes('Can\'t reach database server') ||
+              error?.message?.includes('Connection refused') ||
+              error?.message?.includes('Connection terminated') ||
+              error?.message?.includes('connect ETIMEDOUT') ||
+              error?.code === 'P1001' || // Erro de conexão
+              error?.code === 'P1002'    // Erro de timeout
+
+            if (isConnectionError && retryCount < maxRetries - 1) {
+              retryCount++
+              continue
+            }
+
+            throw error
           }
-          
-          throw error
         }
+        
+        console.error('Todas as tentativas de conexão falharam')
+        throw lastError
       }
     }
   })
