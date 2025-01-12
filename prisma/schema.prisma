@@ -1,13 +1,10 @@
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["multiSchema"]
 }
 
 datasource db {
   provider = "postgresql"
   url = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
-  schemas = ["auth", "public"]
 }
 
 model User {
@@ -22,8 +19,6 @@ model User {
   accounts             Account[]
   sessions             Session[]
   patients             Patient[]
-
-  @@schema("public")
 }
 
 model Account {
@@ -43,7 +38,6 @@ model Account {
 
   @@unique([provider, providerAccountId])
   @@index([userId])
-  @@schema("public")
 }
 
 model Session {
@@ -54,7 +48,6 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
-  @@schema("public")
 }
 
 model VerificationToken {
@@ -63,7 +56,6 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
-  @@schema("public")
 }
 
 model Patient {
@@ -78,5 +70,4 @@ model Patient {
   user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
-  @@schema("public")
 }
