@@ -34,16 +34,23 @@ const prismaClientSingleton = () => {
               error?.message?.includes('Can\'t reach database server') ||
               error?.message?.includes('Connection refused') ||
               error?.message?.includes('Connection terminated') ||
+              error?.message?.includes('connect ETIMEDOUT') ||
               error?.code === 'P1001' || // Erro de conexão do Prisma
               error?.code === 'P1002'    // Erro de timeout do Prisma
             
-            if (isConnectionError) {
+            if (isConnectionError && retryCount < maxRetries - 1) {
               console.error(`Tentativa ${retryCount + 1} de ${maxRetries} falhou:`, error)
               retryCount++
               continue
             }
             
-            throw error
+            // Se for a última tentativa ou não for erro de conexão, lança o erro
+            console.error('Erro na operação do banco de dados:', {
+              operation,
+              error: error.message,
+              code: error.code
+            })
+            throw new Error('Erro ao acessar o banco de dados. Por favor, tente novamente em alguns instantes.')
           }
         }
         
