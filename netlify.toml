@@ -8,7 +8,7 @@
   NPM_FLAGS = "--no-audit --no-optional"
   NEXT_TELEMETRY_DISABLED = "1"
   DIRECT_URL = "postgresql://postgres.uwzswsqvmcinkczzlutv:QwiGPYeapGoXuDESYrby22D%2B7251FxOkEIVW%2BefAxdHJE8BQwzNRvHHu3qMrN49R93y9b2Nvx503bY6Hw5j%2Blw%3D%3D@db.uwzswsqvmcinkczzlutv.supabase.co:5432/postgres"
-  DATABASE_URL = ${DIRECT_URL}
+  DATABASE_URL = "postgresql://postgres.uwzswsqvmcinkczzlutv:QwiGPYeapGoXuDESYrby22D%2B7251FxOkEIVW%2BefAxdHJE8BQwzNRvHHu3qMrN49R93y9b2Nvx503bY6Hw5j%2Blw%3D%3D@db.uwzswsqvmcinkczzlutv.supabase.co:5432/postgres"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
