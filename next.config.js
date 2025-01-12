@@ -21,6 +21,7 @@ const nextConfig = {
   poweredByHeader: false,
   compress: true,
   generateEtags: true,
+  reactStrictMode: false
 }
 
 module.exports = nextConfig
