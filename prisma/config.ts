@@ -7,7 +7,12 @@ const globalForPrisma = globalThis as unknown as {
 const prismaClientSingleton = () => {
   const prisma = new PrismaClient({
     log: ['query', 'error', 'warn'],
-    errorFormat: 'pretty'
+    errorFormat: 'pretty',
+    datasources: {
+      db: {
+        url: process.env.DATABASE_URL?.replace(':6543', ':5432') || process.env.DATABASE_URL
+      }
+    }
   })
 
   return prisma.$extends({
