@@ -105,14 +105,7 @@ const authOptions: AuthOptions = {
     maxAge: 30 * 24 * 60 * 60 // 30 dias
   },
   secret: process.env.NEXTAUTH_SECRET,
-  debug: process.env.NODE_ENV === 'development',
-  errors: {
-    CredentialsSignin: {
-      UserNotFound: 'Usuário não encontrado',
-      InvalidCredentials: 'Senha inválida',
-      InvalidEmail: 'E-mail inválido',
-    },
-  },
+  debug: process.env.NODE_ENV === 'development'
 }
 
 const handler = NextAuth(authOptions)
