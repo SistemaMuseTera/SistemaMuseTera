@@ -3,10 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
-  schemas   = ["auth", "public"]
 }
 
 model User {
@@ -20,8 +19,6 @@ model User {
   updatedAt            DateTime  @updatedAt
   accounts             Account[]
   sessions             Session[]
-
-  @@schema("public")
 }
 
 model Account {
@@ -40,7 +37,6 @@ model Account {
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
-  @@schema("public")
 }
 
 model Session {
@@ -49,8 +45,6 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@schema("public")
 }
 
 model VerificationToken {
@@ -59,5 +53,4 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
-  @@schema("public")
 }
