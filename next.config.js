@@ -1,30 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    optimizeCss: true,
+    serverActions: true,
   },
-  output: 'standalone',
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-    ],
-    unoptimized: true,
+    domains: ['uwzswsqvmcinkczzlutv.supabase.co'],
   },
-  typescript: {
-    ignoreBuildErrors: true
+  webpack: (config) => {
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+    };
+    return config;
   },
-  swcMinify: true,
-  poweredByHeader: false,
-  compress: true,
-  generateEtags: true,
-  reactStrictMode: false,
-  env: {
-    DATABASE_URL: process.env.DATABASE_URL,
-    DIRECT_URL: process.env.DIRECT_URL,
-  }
 }
-
-module.exports = nextConfig
