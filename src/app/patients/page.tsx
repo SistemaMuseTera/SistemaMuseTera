@@ -1,6 +1,9 @@
 import { getPatients } from '@/lib/api'
 import PatientList from '@/components/PatientList'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default async function PatientsPage() {
   const patients = await getPatients()
 
