@@ -24,13 +24,13 @@ const authOptions: AuthOptions = {
           })
 
           if (!user || !user.password) {
-            return null
+            throw new Error('Email ou senha inválidos')
           }
 
           const isValid = await bcrypt.compare(credentials.password, user.password)
 
           if (!isValid) {
-            return null
+            throw new Error('Email ou senha inválidos')
           }
 
           return {
@@ -39,7 +39,8 @@ const authOptions: AuthOptions = {
             name: user.name
           }
         } catch (error) {
-          return null
+          console.error('Erro na autenticação:', error)
+          throw error
         }
       }
     })
@@ -48,26 +49,33 @@ const authOptions: AuthOptions = {
     signIn: '/login',
     error: '/login'
   },
-  debug: false,
-  session: {
-    strategy: 'jwt',
-    maxAge: 30 * 24 * 60 * 60, // 30 days
-  },
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id
+    async jwt({ token, user, account }) {
+      if (account && user) {
+        return {
+          ...token,
+          id: user.id,
+          email: user.email,
+          name: user.name
+        }
       }
       return token
     },
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string
+        session.user.email = token.email as string
+        session.user.name = token.name as string
       }
       return session
     }
   },
-  secret: process.env.NEXTAUTH_SECRET
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60 // 30 days
+  },
+  secret: process.env.NEXTAUTH_SECRET,
+  debug: process.env.NODE_ENV === 'development'
 }
 
 const handler = NextAuth(authOptions)
